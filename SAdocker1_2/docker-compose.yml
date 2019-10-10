@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+    web1:
+      image: nginx:latest
+      ports:
+        - "8080:80"
+      volumes:
+        - ./code:/code
+        - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      links:
+        - php
+        - miMysql
+    
+    php:
+      image: php_mysqli
+      volumes:
+        - ./code:/code
+      links:
+        - miMysql
+
+    miMysql:
+      image: byrich/mysql
+      ports:
+        - '3306:3306'
